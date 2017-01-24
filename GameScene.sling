@@ -1,0 +1,67 @@
+class is SpriteSceneWithEntities imports cape imports cave imports motion:
+
+var audioManager as AudioManager
+var clip as AudioClip
+var stream as AudioStream
+var p as Player
+var mons = 0
+
+func initialize override
+{
+	base.initialize()
+	addEntity(new BackgroundEntity())
+	addEntity(new MonsterEntity())
+	p = new Player()
+	addEntity(p)
+	var txtbtn = TextButtonEntity.forText("Back  to Menu")
+	txtbtn.setPressedColor(Color.forRGBA(180, 255, 0, 150))
+	txtbtn.setBackgroundColor(Color.forRGBA(255, 20, 50, 255))
+	addEntity(txtbtn)
+	txtbtn.move(1.0 - txtbtn.getWidth(), 0.0)
+	txtbtn.setClickHandler(func {
+		pushScene(new MenuScene())
+	})
+	var quitbtn = TextButtonEntity.forText("QUIT")
+	quitbtn.setPressedColor(Color.forRGBA(180, 255, 0, 150))
+	quitbtn.setBackgroundColor(Color.forRGBA(255, 20, 50, 255))
+	addEntity(quitbtn)
+	quitbtn.move(1.0 - quitbtn.getWidth(), 0.1)
+	quitbtn.setClickHandler(func {
+		pushScene(new GameOverScene())
+	})
+	audioManager = AudioManager.forApplication(context)
+	if(audioManager!= null) {
+		clip = audioManager.getClipForResource("pop")
+		stream = audioManager.getStreamForResource("back")
+	}
+	if(clip !=null) {
+		clip.play()
+	}
+	if(stream != null) {
+		stream.play()
+		stream.setLooping(true)
+	}
+}
+
+func tick(gameTime as TimeValue, delta as double) override
+{
+	base.tick(gameTime, delta)
+	mons++
+	if(mons == 200) {
+		addEntity(new MonsterEntity())
+		mons = 0
+	}
+}
+
+func getPlayer as Player
+{
+	return(p)
+}
+
+func cleanup override
+{
+	if(stream != null) {
+		stream.stop()
+	}
+	removeAllEntities()
+}

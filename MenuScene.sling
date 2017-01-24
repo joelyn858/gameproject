@@ -1,0 +1,42 @@
+class is SpriteSceneWithEntities imports cave imports cape imports motion #mainScene:
+
+var am as AudioManager
+var stream as AudioStream
+
+func initialize override
+{
+	base.initialize()
+	addTextureSpriteForSize(createTextureForImageResource("dpbg"), getReferenceWidth(), getReferenceHeight())
+	addEntity(new IconEntity())
+	var tbe = TextButtonEntity.forText("Play Game")
+	tbe.setBackgroundColor(Color.forRGBA(255, 30, 50, 255))
+	addEntity(tbe)
+	tbe.move(0.1, 0.2)
+	tbe.setClickHandler(func  {
+		pushScene(new GameScene())
+	})
+	var tbtn = TextButtonEntity.forText("How to play")
+	tbtn.setBackgroundColor(Color.forRGBA(255, 30, 50, 255))
+	addEntity(tbtn)
+	tbtn.move(0.1, 0.3)
+	tbtn.setClickHandler(func {
+		pushScene(new Instructions())
+	})
+	am = AudioManager.forApplication(context)
+	if(am != null) {
+		stream = am.getStreamForResource("msintro")
+	}
+	if(stream != null) {
+		stream.play()
+		stream.setLooping(true)
+
+	}
+}
+
+func cleanup override
+{
+	if(stream != null) {
+		stream.stop()
+	}
+	removeAllEntities()
+}

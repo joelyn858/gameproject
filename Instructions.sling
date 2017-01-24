@@ -1,0 +1,16 @@
+class is SpriteSceneWithEntities imports cape imports cave imports motion:
+
+func initialize override
+{
+	base.initialize()
+	addTextureSpriteForSize(createTextureForImageResource("ibg"), getReferenceWidth(), getReferenceHeight())
+	addEntity(new TextEntity())
+	var btn = TextButtonEntity.forText("Back to Main Menu")
+	btn.setPressedColor(Color.forRGBA(100, 255, 0, 150))
+	btn.setBackgroundColor(Color.forRGBA(255, 20, 50, 255))
+	addEntity(btn)
+	btn.move(0.0, 0.0)
+	btn.setClickHandler(func {
+		pushScene(new MenuScene())
+	})
+}

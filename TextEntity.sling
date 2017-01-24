@@ -1,0 +1,20 @@
+class is SpriteEntity imports cape imports cave imports motion:
+
+func createSprite override as Sprite
+{
+	var textProp = TextProperties.forText("")
+	textProp.setText("INSTRUCTIONS: ")
+	textProp.setTextColor(Color.white())
+	textProp.setFontSizeRelative(0.075 * layer.getReferenceHeight())
+	textProp.setFontFamily("Times new roman")
+	var text = layer.addTextSprite(textProp)
+	text.move(0.5 - text.getWidth() * 0.5, text.getHeight() * 0.5)
+	var textP = TextProperties.forText("")
+	textP.setText("All you have to do is to avoid all the other marvel icon bouncing all around!")
+	textP.setTextColor(Color.white())
+	textP.setFontSizeRelative(0.075 * layer.getReferenceHeight())
+	textP.setFontFamily("Time new roman")
+	var txt = layer.addTextSprite(textP)
+	txt.move(1.0 - txt.getWidth() * 0.9, txt.getHeight() * 1.0 + text.getHeight())
+	return(txt)
+}

@@ -1,0 +1,13 @@
+title = "Deadpool Game"
+vendorId = "com.game"
+depends = [
+	"cape",
+	"capex",
+	"cave",
+	"motion"
+]
+resources = [
+	"images",
+	"audio"
+]
+preFilters += "@motion"

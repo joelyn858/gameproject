@@ -1,0 +1,9 @@
+class is SpriteEntity imports cape imports cave imports motion:
+
+func createSprite override as Sprite
+{
+	var img = scene.createTextureForImageResource("dp")
+	var icon = SpriteUtil.addTextureSpriteForWidth(scene, layer, img, 0.9 * layer.getReferenceHeight())
+	icon.move(0.1, 0.1)
+	return(icon)
+}

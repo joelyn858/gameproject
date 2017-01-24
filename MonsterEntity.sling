@@ -1,0 +1,57 @@
+class is SpriteEntity is PointerListener imports cape imports cave imports motion:
+
+var logo as vector<string>
+var moveX as double
+var moveY as double
+var dirX as double
+var dirY as double
+var speed = 100
+var player as Player
+
+ctor
+{
+	logo = new vector<string>
+	logo += "superm"
+	logo += "sheild"
+	logo += "avenger"
+	logo += "captain_shield"
+	logo += "bat"
+	logo += "bolt"
+}
+
+func createSprite override as Sprite
+{
+	var random = new Random().nextInt(6)
+	var str = Vector.get(logo, random)
+	var img = scene.createTextureForImageResource(str)
+	var logos = SpriteUtil.addTextureSpriteForWidth(scene, layer, img, 0.1 * layer.getReferenceWidth())
+	moveX = new Random().nextDouble()
+	moveY = new Random().nextDouble()
+	logos.move(moveX, moveY)
+	var gs = scene as GameScene
+	player = gs.getPlayer()
+	return(logos)
+}
+
+func tick(gameTime as TimeValue, delta as double) override
+{
+	base.tick(gameTime, delta)
+	var x = sprite.getX()
+	var y = sprite.getY()
+	if(dirX >= 0 || dirX != x) {
+		x -= (x - dirX) / speed
+	}
+	if(dirY >= 0 || dirY != x) {
+		y -= (y - dirY) / speed
+	}
+	sprite.move(x, y)
+}
+
+func onPointerEvent(event as PointerEvent) as bool
+{
+	if(event.action == PointerEvent.MOVE) {
+		dirX = event.getX()
+		dirY = event.getY()
+	}
+	return(false)
+}

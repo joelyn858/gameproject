@@ -1,0 +1,9 @@
+class is SpriteEntity imports cape imports cave imports motion:
+
+func createSprite override as Sprite
+{
+	var bg = scene.createTextureForImageResource("game_over")
+	var phto = SpriteUtil.addTextureSpriteForWidth(scene, layer, bg, 0.9 * layer.getReferenceHeight())
+	phto.move(0.1, 0.1)
+	return(phto)
+}

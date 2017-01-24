@@ -1,0 +1,46 @@
+class is SpriteEntity is PointerListener imports cape imports cave imports motion:
+
+var directionX as double
+var directionY as double
+var speed = 30
+
+func createSprite override as Sprite
+{
+	var texture = scene.createTextureForImageResource("deadpool")
+	var img = SpriteUtil.addTextureSpriteForWidth(scene, layer, texture, 0.15 * layer.getReferenceHeight())
+	img.move(directionX, directionY)
+	return(img)
+}
+
+func tick(gameTime as TimeValue, delta as double) override
+{
+	base.tick(gameTime, delta)
+	var x = sprite.getX()
+	var y = sprite.getY()
+	if(directionX >= 0 || directionX != x) {
+		x -= (x - directionX) / speed
+	}
+	if(directionY >= 0 || directionY != x) {
+		y -= (y - directionY) / speed
+	}
+	sprite.move(x, y)
+}
+
+func onPointerEvent(event as PointerEvent) as bool
+{
+	if(event.action == PointerEvent.MOVE) {
+		directionX = event.getX()
+		directionY = event.getY()
+	}
+	return(false)
+}
+
+func getPlayerX as double
+{
+	return(sprite.getX())
+}
+
+func getPlayerY as double
+{
+	return(sprite.getY())
+}
